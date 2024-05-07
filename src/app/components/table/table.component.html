@@ -1,0 +1,23 @@
+
+<table>
+    <tr>
+        <th>Logo</th>
+        <th>Nombre del Producto</th>
+        <th>Descripción <app-icon src="circle-info"></app-icon></th>
+        <th>Fecha de liberación <app-icon src="circle-info"></app-icon></th>
+        <th colspan="2">Fecha de reestructuración <app-icon src="circle-info"></app-icon></th>
+    </tr>
+    <tr *ngFor="let product of products">
+        <td>
+            <div class="thumbnail">
+                <img [src]="product.logo" alt="logo">
+            </div>
+        </td>
+        <td>{{product.name}}</td>
+        <td>{{product.description}}</td>
+        <td>{{product.date_release | date: 'dd/MM/YYYY'}}</td>
+        <td>{{product.date_revision | date: 'dd/MM/YYYY'}}</td>
+        <td class="text-right"><app-icon src="trash" (click)="openMenu($event,product)"></app-icon></td>
+</table>
+<app-context-menu *ngIf="selectedProduct" [x]="contextMenuX" [y]="contextMenuY" (edited)="handleEdit()" (deleted)="handleDelete()"></app-context-menu>
+<app-modal *ngIf="modalIsOpen" (confirmed)="handleConfirm()" (canceled)="handleCancel()" [name]="selectedProduct!.name"></app-modal>
