@@ -1,0 +1,48 @@
+.products_table {
+    background-color: #fff;
+    padding: 15px;
+}
+.table_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    input {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 300px;
+        height: 30px;
+        padding: 0 10px;
+        font-size: .8em;
+    }
+    .add_btn {
+        border: none;
+        border-radius: 5px;
+        height: 30px;
+        padding: 0 2em;
+        font-size: .8em;
+        background-color: rgb(243, 195, 64);
+        font-weight: 600;
+        cursor: pointer;
+    }
+}
+.table_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .8em;
+    background-color: #fff;
+    padding: 15px;
+    .results {
+        font-weight: 600;
+        font-size: .9em;
+    }
+    select {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100px;
+        height: 30px;
+        font-weight: 600;
+        text-align: center;
+    }
+}

@@ -1,0 +1,15 @@
+<div class="table_header">
+    <input [(ngModel)]="searchValue" type="text" placeholder="Search...">
+    <button class="add_btn" routerLink="/new-product">Agregar</button>
+</div>
+<div class="products_table">
+    <app-table [products]="products | productFilter: getSearchValue() | paginate: displayedProducts"></app-table>
+</div>
+<div class="table_footer">
+    <div class="results">{{displayedProducts}} Resultados</div>
+    <select [(ngModel)]="displayedProducts">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+    </select>
+</div>
