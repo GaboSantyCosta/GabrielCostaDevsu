@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { NgIf } from '@angular/common';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-new-product',
@@ -11,6 +12,7 @@ import { NgIf } from '@angular/common';
   styleUrl: './new-product.component.scss'
 })
 export class NewProductComponent implements OnInit {
+  private productService: ProductService = inject(ProductService);
   productForm: FormGroup = new FormGroup({});
   constructor(private fb: FormBuilder) { }
 
@@ -20,21 +22,25 @@ export class NewProductComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[a-zA-Z]{3}-[a-zA-Z]{3}$')
       ] ],
-      name: ['', Validators.required],
-      description: ['', Validators.required],
+      name: ['', Validators.required,Validators.maxLength(100),Validators.minLength(10)],
+      description: ['', Validators.required,Validators.maxLength(100),Validators.minLength(10)],
       logo: ['', Validators.required],
-      date_release: ['', Validators.required],
-      date_revision: ['']
+      date_release: [new Date(), Validators.required],
+      date_revision: [{value: this.oneYearLater(), disabled: true}]
     });
   }
 
   onSubmit(): void {
-    if (this.productForm.valid) {
-      // Enviar el formulario
-      console.log('Formulario válido', this.productForm.value);
-    } else {
-      // Marcar campos inválidos
-      this.marcarCamposInvalidos(this.productForm);
+    try {
+      if (this.productForm.valid) {
+        this.productService.addProduct(this.productForm.value);
+        this.productForm.reset();
+      } else {
+        // Marcar campos inválidos
+        this.marcarCamposInvalidos(this.productForm);
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -48,6 +54,11 @@ export class NewProductComponent implements OnInit {
         formControl!.markAsTouched();
       }
     });
+  }
+
+  oneYearLater(): Date {
+    const currentDate = new Date();
+    return new Date(currentDate.getFullYear() + 1, currentDate.getMonth(), currentDate.getDate());
   }
 
 }
